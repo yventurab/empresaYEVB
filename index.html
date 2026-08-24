@@ -422,7 +422,7 @@
           </div>
 
           <div class="col-lg-8">
-            <form action="mailto:contacto@yevb.com" method="post" enctype="text/plain" data-aos="fade-up" data-aos-delay="200">
+            <form id="contactForm" onsubmit="enviarCorreo(event)" data-aos="fade-up" data-aos-delay="200">
               <div class="row gy-4">
 
                 <div class="col-md-6">
@@ -531,6 +531,29 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+
+  <script>
+    function enviarCorreo(event) {
+      event.preventDefault(); // Evita la alerta de seguridad del navegador
+    
+      const form = event.target;
+      const nombre = encodeURIComponent(form.Nombre_o_Empresa.value);
+      const correo = encodeURIComponent(form.Correo.value);
+      const servicio = encodeURIComponent(form.Servicio_de_Interes.value);
+      const mensaje = encodeURIComponent(form.Mensaje.value);
+    
+      const emailDestino = "contacto@yevb.com";
+      const asunto = encodeURIComponent(`Nuevo mensaje de: ${form.Nombre_o_Empresa.value}`);
+      
+      const cuerpo = `Nombre/Empresa: ${nombre}%0D%0A` +
+                      `Correo de contacto: ${correo}%0D%0A` +
+                      `Servicio de Interés: ${servicio}%0D%0A%0D%0A` +
+                      `Mensaje:%0D%0A${mensaje}`;
+    
+      // Abre el cliente de correo local con todos los datos completados
+      window.location.href = `mailto:${emailDestino}?subject=${asunto}&body=${cuerpo}`;
+    }
+    </script>
 
 </body>
 
